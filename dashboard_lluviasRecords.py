@@ -10,7 +10,7 @@ import os
 st.set_page_config(page_title="Mapas de Récords de Lluvias Mensuales", layout="wide")
 
 st.title("Mapas de Récords de Lluvias Mensuales")
-st.write("Haz clic en cada pestaña para ver el mapa correspondiente al mes")
+st.write("Haz clic en cada pestaña para ver el mapa correspondiente a los récords de lluvia de cada mes")
 
 # Ruta RELATIVA (no cambies esto)
 ruta = "Lluvia"
@@ -54,6 +54,7 @@ for i, tab in enumerate(tabs):
             st.image(img_path, caption=titulos[i])
         else:
             st.warning(f"No se encontró la imagen: {mapas[i]}")
+
 
 
 
