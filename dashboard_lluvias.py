@@ -12,10 +12,9 @@ st.set_page_config(page_title="Mapas de Récords de Lluvias Mensuales", layout="
 st.title("Mapas de Récords de Lluvias Mensuales")
 st.write("Haz clic en cada pestaña para ver el mapa correspondiente al mes")
 
-# Ruta donde están los mapas (.jpg)
-ruta = r"C:\Users\dpoleo\Downloads\Poleo\Mapas de records\Lluvia"
+# Ruta RELATIVA (no cambies esto)
+ruta = "Lluvia"
 
-# Nombres de los archivos (asegúrate que estén correctos y en el mismo orden que los títulos)
 mapas = [
     "PCP_01_Enero_Records.jpg",
     "PCP_01_Enero_Records_op1.jpg",
@@ -32,7 +31,6 @@ mapas = [
     "PCP_12_Diciembre_Records.jpg"
 ]
 
-# Títulos para las pestañas
 titulos = [
     "Enero (Versión 1)",
     "Enero (Versión 2)",
@@ -58,3 +56,5 @@ for i, tab in enumerate(tabs):
             st.image(img_path, caption=titulos[i])
         else:
             st.warning(f"No se encontró la imagen: {mapas[i]}")
+
+
