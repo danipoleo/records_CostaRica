@@ -31,8 +31,7 @@ mapas = [
 ]
 
 titulos = [
-    "Enero (Versión 1)",
-    "Enero (Versión 2)",
+    "Enero",
     "Febrero",
     "Marzo",
     "Abril",
@@ -55,6 +54,7 @@ for i, tab in enumerate(tabs):
             st.image(img_path, caption=titulos[i])
         else:
             st.warning(f"No se encontró la imagen: {mapas[i]}")
+
 
 
 
