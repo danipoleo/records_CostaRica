@@ -17,8 +17,8 @@ ruta = "Lluvia"
 
 mapas = [
     "PCP_01_Enero_Records.jpg",
-    "PCP_01_febrero_Records.jpg",
-    "PCP_01_Marzo_Records.jpg",
+    "PCP_02_Febrero_Records.jpg",
+    "PCP_03_Marzo_Records.jpg",
     "PCP_04_Abril_Records.jpg",
     "PCP_05_Mayo_Records.jpg",
     "PCP_06_Junio_Records.jpg",
@@ -54,6 +54,7 @@ for i, tab in enumerate(tabs):
             st.image(img_path, caption=titulos[i])
         else:
             st.warning(f"No se encontró la imagen: {mapas[i]}")
+
 
 
 
