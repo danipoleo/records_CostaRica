@@ -17,7 +17,7 @@ variables = {
     "Lluvia": {
         "carpeta": "Lluvia",
         "archivos": [f"PCP_{str(i).zfill(2)}_{mes}_Records.jpg" for i, mes in enumerate(
-            ["Enero", "febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
+            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
         "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     },
     "Ráfagas": {
