@@ -12,75 +12,65 @@ st.set_page_config(page_title="Mapas Climáticos Mensuales", layout="wide")
 st.title("Mapas Climáticos Mensuales")
 st.write("Haz clic en cada pestaña para ver los mapas correspondientes a los récords de cada variable y mes.")
 
-# Nombres y rutas de las variables
+# Definir pestañas principales y su estructura de archivos
 variables = {
-    "Lluvia": "Lluvia",
-    "Viento": "Viento",
-    "Temperatura Máxima": "Tmax",
-    "Temperatura Mínima": "Tmin",
-    "Composite": "Composite"
+    "Lluvia": {
+        "carpeta": "Lluvia",
+        "archivos": [f"PCP_{str(i).zfill(2)}_{mes}_Records.jpg" for i, mes in enumerate(
+            ["Enero", "febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
+        "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    },
+    "Ráfagas": {
+        "carpeta": "Ráfagas",
+        "archivos": [f"VVmax_{str(i).zfill(2)}{mes}.jpeg" for i, mes in enumerate(
+            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
+        "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    },
+    "Temperatura Máxima": {
+        "carpeta": "Temperatura Máxima",
+        "archivos": [f"Record_Tmax_{str(i).zfill(2)}-{mes}.jpg" for i, mes in enumerate(
+            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
+        "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    },
+    "Temperatura Mínima": {
+        "carpeta": "Temperatura Mínima",
+        "archivos": [f"{str(i).zfill(2)}_Record_Tmin_{mes}.jpg" for i, mes in enumerate(
+            ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
+        "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    },
+    "Composite": {
+        "carpeta": "Composites Anual",
+        "archivos": ["Records_lluvia_meses.jpg"],
+        "titulos": ["Composite Anual"]
+    }
 }
 
-# Archivos y títulos por mes
-mapas = [
-    "01_Enero_Records.jpg",
-    "02_Febrero_Records.jpg",
-    "03_Marzo_Records.jpg",
-    "04_Abril_Records.jpg",
-    "05_Mayo_Records.jpg",
-    "06_Junio_Records.jpg",
-    "07_Julio_Records.jpg",
-    "08_Agosto_Records.jpg",
-    "09_Septiembre_Records.jpg",
-    "10_Octubre_Records.jpg",
-    "11_Noviembre_Records.jpg",
-    "12_Diciembre_Records.jpg"
-]
+# Crear pestañas principales
+tabs_principales = st.tabs(list(variables.keys()))
 
-titulos = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre"
-]
-
-# Pestañas principales (una por variable)
-tab_var = st.tabs(list(variables.keys()))
-
-for v, tab in zip(variables.keys(), tab_var):
+for nombre_var, tab in zip(variables.keys(), tabs_principales):
     with tab:
-        st.subheader(f"Récords Mensuales de {v}")
-        ruta = variables[v]
-        tabs_mes = st.tabs(titulos)
-        for i, tab_mes in enumerate(tabs_mes):
-            with tab_mes:
-                # Nombre de imagen por convención: Carpeta/PCP_01_Enero_Records.jpg, etc.
-                # Si tienes diferentes prefijos por variable, ajusta aquí
-                if v == "Lluvia":
-                    img_name = f"PCP_{mapas[i]}"
-                elif v == "Viento":
-                    img_name = f"VNT_{mapas[i]}"
-                elif v == "Temperatura Máxima":
-                    img_name = f"TMAX_{mapas[i]}"
-                elif v == "Temperatura Mínima":
-                    img_name = f"TMIN_{mapas[i]}"
-                elif v == "Composite":
-                    img_name = f"CMP_{mapas[i]}"
-                else:
-                    img_name = mapas[i]  # fallback
+        st.subheader(f"Mapas de {nombre_var}")
+        carpeta = variables[nombre_var]["carpeta"]
+        archivos = variables[nombre_var]["archivos"]
+        titulos = variables[nombre_var]["titulos"]
 
-                img_path = os.path.join(ruta, img_name)
-                if os.path.exists(img_path):
-                    st.image(img_path, caption=f"{v} - {titulos[i]}")
-                else:
-                    st.warning(f"No se encontró la imagen: {img_name}")
+        # Si hay varios meses (subpestañas)
+        if len(archivos) > 1:
+            tabs_meses = st.tabs(titulos)
+            for i, tab_mes in enumerate(tabs_meses):
+                with tab_mes:
+                    img_path = os.path.join(carpeta, archivos[i])
+                    if os.path.exists(img_path):
+                        st.image(img_path, caption=f"{nombre_var} - {titulos[i]}")
+                    else:
+                        st.warning(f"No se encontró la imagen: {archivos[i]}")
+        else:
+            # Solo hay un archivo (Composite)
+            img_path = os.path.join(carpeta, archivos[0])
+            if os.path.exists(img_path):
+                st.image(img_path, caption=titulos[0])
+            else:
+                st.warning(f"No se encontró la imagen: {archivos[0]}")
 
 
