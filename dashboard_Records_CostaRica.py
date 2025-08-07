@@ -40,8 +40,18 @@ variables = {
     },
     "Composite": {
         "carpeta": "Composites Anual",
-        "archivos": ["Records_lluvia_meses.jpg"],
-        "titulos": ["Composite Anual"]
+        "archivos": [
+            "Records_lluvia_meses.jpg",
+            "Tmax.jpg",
+            "VVmax.jpg",
+            "Tmin.jpg"
+        ],
+        "titulos": [
+            "Lluvia Anual",
+            "Temperatura Máxima Anual",
+            "Ráfagas Anual",
+            "Temperatura Mínima Anual"
+        ]
     }
 }
 
@@ -66,7 +76,7 @@ for nombre_var, tab in zip(variables.keys(), tabs_principales):
                     else:
                         st.warning(f"No se encontró la imagen: {archivos[i]}")
         else:
-            # Solo hay un archivo (Composite)
+            # Solo hay un archivo
             img_path = os.path.join(carpeta, archivos[0])
             if os.path.exists(img_path):
                 st.image(img_path, caption=titulos[0])
