@@ -28,7 +28,7 @@ variables = {
     },
     "Temperatura Máxima": {
         "carpeta": "Temperatura Máxima",
-        "archivos": [f"Record_Tmax_{str(i).zfill(2)}_{mes}.jpg" for i, mes in enumerate(
+        "archivos": [f"Record_Tmax_{str(i).zfill(2)}_{mes}_corregido.jpg" for i, mes in enumerate(
             ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"], 1)],
         "titulos": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     },
