@@ -148,37 +148,36 @@ for nombre_var, tab in zip(variables_con_distritales.keys(), tabs_principales):
 
         else:
             # -----------------------------
-            # Pestaña "Distritales" (al final) - carga desde GitHub RAW
+            # Pestaña "Distritales" (al final)
+            # Meses como TABS horizontales (Enero...Diciembre)
+            # y dentro de cada mes, 4 sub-pestañas por variable.
             # -----------------------------
             st.subheader("Mapas Distritales")
             st.caption("Las imágenes se cargan desde el repositorio de GitHub (rama main).")
 
-            # Subpestañas por variable
-            sub_tabs = st.tabs(["Ráfagas", "Lluvia", "Temperatura Máxima", "Temperatura Mínima"])
+            # Tabs por mes (horizontal como en tu imagen)
+            tabs_meses = st.tabs([m[2] for m in _MESES])  # títulos: Enero..Diciembre
 
-            for nombre_sub, sub_tab in zip(
-                ["Ráfagas", "Lluvia", "Temperatura Máxima", "Temperatura Mínima"], sub_tabs
-            ):
-                with sub_tab:
-                    st.write(f"**{nombre_sub}** · Selecciona el mes:")
+            for (num, mes_lower, mes_title), tab_mes in zip(_MESES, tabs_meses):
+                with tab_mes:
+                    # Subpestañas por variable dentro de cada mes
+                    sub_tabs = st.tabs(["Ráfagas", "Lluvia", "Temperatura Máxima", "Temperatura Mínima"])
 
-                    # Selector de mes (UI con nombre título; URL usa número y lower)
-                    opciones_ui = [m[2] for m in _MESES]
-                    sel = st.selectbox("Mes", opciones_ui, key=f"sel_{nombre_sub}")
-                    num, mes_lower, mes_title = next(m for m in _MESES if m[2] == sel)
+                    for nombre_sub, sub_tab in zip(
+                        ["Ráfagas", "Lluvia", "Temperatura Máxima", "Temperatura Mínima"], sub_tabs
+                    ):
+                        with sub_tab:
+                            url_img = construir_url_distrital(nombre_sub, num, mes_lower)
 
-                    url_img = construir_url_distrital(nombre_sub, num, mes_lower)
+                            cols = st.columns([3, 1])
+                            with cols[0]:
+                                st.image(
+                                    url_img,
+                                    caption=f"{nombre_sub} - {mes_title} (Distrital)",
+                                    use_container_width=True,  # ✅ sin deprecación
+                                )
+                            with cols[1]:
+                                st.markdown(f"[Abrir imagen en nueva pestaña]({url_img})")
 
-                    cols = st.columns([3, 1])
-                    with cols[0]:
-                        # ✅ sin deprecación (use_container_width)
-                        st.image(
-                            url_img,
-                            caption=f"{nombre_sub} - {mes_title} (Distrital)",
-                            use_container_width=True,
-                        )
-                    with cols[1]:
-                        st.markdown(f"[Abrir imagen en nueva pestaña]({url_img})")
-
-                    st.divider()
-                    st.caption(f"Fuente: {url_img}")
+                            st.divider()
+                            st.caption(f"Fuente: {url_img}")
