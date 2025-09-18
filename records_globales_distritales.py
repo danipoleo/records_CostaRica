@@ -164,7 +164,9 @@ for nombre_var, tab in zip(variables_con_distritales.keys(), tabs_principales):
                     # Muestra la imagen y un enlace de respaldo
                     cols = st.columns([3, 1])
                     with cols[0]:
-                        st.image(url_img, caption=f"{nombre_sub} - {mes_title} (Distrital)", use_column_width=True)
+                        #st.image(url_img, caption=f"{nombre_sub} - {mes_title} (Distrital)", use_column_width=True)
+                        st.image(url_img, caption=f"{nombre_sub} - {mes_title} (Distrital)", use_container_width=True)
+
                     with cols[1]:
                         st.markdown(f"[Abrir imagen en nueva pestaña]({url_img})")
 
